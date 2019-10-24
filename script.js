@@ -31,32 +31,32 @@ function render() {
 }
 
 // check for localStorage
-// if (localStorage.getItem('myLibrary') !== null) {
-//   myLibrary = JSON.parse(localStorage.getItem('myLibrary'));
+if (localStorage.getItem('myLibrary') !== null) {
+  myLibrary = JSON.parse(localStorage.getItem('myLibrary'));
 
-//   for (let i = 0; i < myLibrary.length; i++) {
-//     let book = myLibrary[i]
-//     table.innerHTML += `<tr>
-//   <td>${book.title}</td>
-//   <td>${book.author}</td>
-//   <td>${book.pages}</td>
-//   <td class="readStatus">${book.read}</td>
-//   <td><input id=${myLibrary.length} type="button" value="Delete" class="delete"></td>
-//   </tr>`
-//   }
+  for (let i = 0; i < myLibrary.length; i++) {
+    let book = myLibrary[i]
+    table.innerHTML += `<tr>
+  <td>${book.title}</td>
+  <td>${book.author}</td>
+  <td>${book.pages}</td>
+  <td class="readStatus">${book.read}</td>
+  <td><input id=${i+1} type="button" value="Delete" class="delete"></td>
+  </tr>`
+  }
 
-// } else {
-//   // add dummy books
-//   addBookToLibrary('11/22/63', 'Stephen King', '777', 'Read');
-//   addBookToLibrary('The Road', 'Cormac McCarthy', '162', 'Read');
-//   addBookToLibrary('The Bell Jar', 'Sylvia Path', '232', 'Not-read');
-
-// }
-
-// add dummy books
+} else {
+  // add dummy books
   addBookToLibrary('11/22/63', 'Stephen King', '777', 'Read');
   addBookToLibrary('The Road', 'Cormac McCarthy', '162', 'Read');
   addBookToLibrary('The Bell Jar', 'Sylvia Path', '232', 'Not-read');
+
+}
+
+// // add dummy books
+//   addBookToLibrary('11/22/63', 'Stephen King', '777', 'Read');
+//   addBookToLibrary('The Road', 'Cormac McCarthy', '162', 'Read');
+//   addBookToLibrary('The Bell Jar', 'Sylvia Path', '232', 'Not-read');
 
 // show form to add book //
 function openForm() {
@@ -142,6 +142,8 @@ function deleteBook(row) {
   let child = parent.getElementsByTagName('tr')[0];
 
   parent.removeChild(child);
+
+  // add somethig to also delete from local storage. localStorage.removeitem***
 };
 
 // create array of delete buttons GLOBAL
