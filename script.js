@@ -30,7 +30,7 @@ function render() {
 
 }
 
-// check for localStorage
+// check for localStorage on page load
 if (localStorage.getItem('myLibrary') !== null) {
   myLibrary = JSON.parse(localStorage.getItem('myLibrary'));
 
@@ -53,11 +53,6 @@ if (localStorage.getItem('myLibrary') !== null) {
 
 }
 
-// // add dummy books
-//   addBookToLibrary('11/22/63', 'Stephen King', '777', 'Read');
-//   addBookToLibrary('The Road', 'Cormac McCarthy', '162', 'Read');
-//   addBookToLibrary('The Bell Jar', 'Sylvia Path', '232', 'Not-read');
-
 // show form to add book //
 function openForm() {
   document.getElementById("form").style.display = "block";
@@ -75,6 +70,44 @@ function closeForm() {
 
 // page loads to closed form
 closeForm();
+
+// add event listener to close button
+let closeButton = document.getElementById("close");
+closeButton.addEventListener('click', function () {
+  closeForm();
+});
+
+// change read status GLOBAL
+let readStatus = Array.from(document.getElementsByClassName('readStatus'));
+readStatus.forEach(function (elem) {
+  elem.addEventListener('click', function () {
+    if (elem.innerHTML == "Read") {
+      elem.innerHTML = "Not-read"
+    } else {
+      elem.innerHTML = "Read"
+    };
+  });
+});
+
+// delete book based on row
+function deleteBook(row) {
+
+  let parent = document.getElementById('table').getElementsByTagName('tbody')[row];
+  let child = parent.getElementsByTagName('tr')[0];
+
+  parent.removeChild(child);
+
+};
+
+// create array of delete buttons GLOBAL
+let deleteButtons = Array.from(document.getElementsByClassName('delete'));
+
+// give functionality to each delete button GLOBAL
+deleteButtons.forEach(function (elem) {
+  elem.addEventListener('click', function () {
+    deleteBook(elem.id);
+  });
+});
 
 // add book with information from form // 
 let submit = document.getElementById("submit");
@@ -126,44 +159,4 @@ submit.addEventListener('click', function () {
 
   localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
 
-});
-
-// add event listener to close button
-let closeButton = document.getElementById("close");
-closeButton.addEventListener('click', function () {
-  closeForm();
-});
-
-
-// delete book based on row
-function deleteBook(row) {
-
-  let parent = document.getElementById('table').getElementsByTagName('tbody')[row];
-  let child = parent.getElementsByTagName('tr')[0];
-
-  parent.removeChild(child);
-
-  // add somethig to also delete from local storage. localStorage.removeitem***
-};
-
-// create array of delete buttons GLOBAL
-let deleteButtons = Array.from(document.getElementsByClassName('delete'));
-
-// give functionality to each delete button GLOBAL
-deleteButtons.forEach(function (elem) {
-  elem.addEventListener('click', function () {
-    deleteBook(elem.id);
-  });
-});
-
-// change read status GLOBAL
-let readStatus = Array.from(document.getElementsByClassName('readStatus'));
-readStatus.forEach(function (elem) {
-  elem.addEventListener('click', function () {
-    if (elem.innerHTML == "Read") {
-      elem.innerHTML = "Not-read"
-    } else {
-      elem.innerHTML = "Read"
-    };
-  });
 });
